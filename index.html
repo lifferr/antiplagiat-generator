@@ -3,37 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Генератор отчётов «Антиплагиат»</title>
+    <title>Антиплагиат — Генератор отчётов</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
-    <header class="header">
-        <div class="logo">🛡️ Антиплагиат — Генератор отчётов</div>
-        <div class="subtitle">http://vsu-by.antiplagiat.ru</div>
+    <!-- Фоновые декоративные пятна -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- Шапка -->
+    <header class="glass-header">
+        <div class="header-inner">
+            <div class="brand">
+                <svg class="brand-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <div>
+                    <div class="brand-title">Антиплагиат</div>
+                    <div class="brand-subtitle">Генератор отчётов</div>
+                </div>
+            </div>
+            <div class="header-meta">vsu-by.antiplagiat.ru</div>
+        </div>
     </header>
 
     <main class="container">
-        <!-- Блок 1: Метаданные документа -->
-        <section class="card">
-            <h2>📄 Информация о документе</h2>
+
+        <!-- Карточка 1: Метаданные документа -->
+        <section class="glass-card">
+            <div class="card-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                </svg>
+                <h2>Информация о документе</h2>
+            </div>
             <div class="grid-2">
-                <label>Автор:
+                <label class="field">
+                    <span class="field-label">Автор</span>
                     <input type="text" id="author" value="Цырулик Андрей Сергеевич">
                 </label>
-                <label>Проверяющий:
+                <label class="field">
+                    <span class="field-label">Проверяющий</span>
                     <input type="text" id="reviewer" value="Бревнова Анастасия Андреевна">
                 </label>
-                <label>Название документа:
+                <label class="field field-full">
+                    <span class="field-label">Название документа</span>
                     <input type="text" id="docTitle" value="РАЗРАБОТКА ВЕБ-САЙТА ТУРАГЕНТСТВО">
                 </label>
-                <label>Организация:
+                <label class="field field-full">
+                    <span class="field-label">Организация</span>
                     <input type="text" id="organization" value="Учреждение образования «Витебский государственный университет имени П.М. Машерова»">
                 </label>
-                <label>Номер документа:
+                <label class="field">
+                    <span class="field-label">Номер документа</span>
                     <input type="number" id="docNumber" value="3712">
                 </label>
-                <label>Тип документа:
+                <label class="field">
+                    <span class="field-label">Тип документа</span>
                     <select id="docType">
                         <option>Дипломная работа</option>
                         <option>Курсовая работа</option>
@@ -42,145 +74,200 @@
                         <option>Диссертация</option>
                     </select>
                 </label>
-                <label>Количество страниц:
+                <label class="field">
+                    <span class="field-label">Количество страниц</span>
                     <input type="number" id="pages" value="38">
                 </label>
-                <label>Слов в тексте:
+                <label class="field">
+                    <span class="field-label">Слов в тексте</span>
                     <input type="number" id="words" value="6901">
                 </label>
-                <label>Символов в тексте:
+                <label class="field">
+                    <span class="field-label">Символов в тексте</span>
                     <input type="number" id="chars" value="60256">
                 </label>
-                <label>Число предложений:
+                <label class="field">
+                    <span class="field-label">Число предложений</span>
                     <input type="number" id="sentences" value="1989">
                 </label>
             </div>
         </section>
 
-        <!-- Блок 2: Настройка процентов -->
-        <section class="card">
-            <h2>📊 Настройка показателей проверки</h2>
-            <p class="hint">Сумма показателей должна быть равна 100%. Значения пересчитываются автоматически.</p>
-            
+        <!-- Карточка 2: Настройка процентов -->
+        <section class="glass-card">
+            <div class="card-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="20" x2="18" y2="10"/>
+                    <line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+                <h2>Показатели проверки</h2>
+            </div>
+            <div class="hint">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                Сумма показателей должна быть равна 100%. Значения пересчитываются автоматически.
+            </div>
+
             <div class="percentages">
-                <div class="percent-item">
-                    <label>
-                        <span class="dot" style="background:#4caf50"></span>
-                        Оригинальность
-                    </label>
+                <div class="percent-item" data-key="originality">
+                    <div class="percent-head">
+                        <span class="dot dot-green"></span>
+                        <span class="percent-label">Оригинальность</span>
+                    </div>
                     <div class="slider-row">
                         <input type="range" id="originality" min="0" max="100" step="0.01" value="89.39">
                         <input type="number" id="originalityNum" min="0" max="100" step="0.01" value="89.39">
-                        <span>%</span>
+                        <span class="percent-sign">%</span>
                     </div>
                 </div>
 
-                <div class="percent-item">
-                    <label>
-                        <span class="dot" style="background:#ff9800"></span>
-                        Совпадения
-                    </label>
+                <div class="percent-item" data-key="matches">
+                    <div class="percent-head">
+                        <span class="dot dot-orange"></span>
+                        <span class="percent-label">Совпадения</span>
+                    </div>
                     <div class="slider-row">
                         <input type="range" id="matches" min="0" max="100" step="0.01" value="9.52">
                         <input type="number" id="matchesNum" min="0" max="100" step="0.01" value="9.52">
-                        <span>%</span>
+                        <span class="percent-sign">%</span>
                     </div>
                 </div>
 
-                <div class="percent-item">
-                    <label>
-                        <span class="dot" style="background:#2196f3"></span>
-                        Цитирования
-                    </label>
+                <div class="percent-item" data-key="citations">
+                    <div class="percent-head">
+                        <span class="dot dot-blue"></span>
+                        <span class="percent-label">Цитирования</span>
+                    </div>
                     <div class="slider-row">
                         <input type="range" id="citations" min="0" max="100" step="0.01" value="0">
                         <input type="number" id="citationsNum" min="0" max="100" step="0.01" value="0">
-                        <span>%</span>
+                        <span class="percent-sign">%</span>
                     </div>
                 </div>
 
-                <div class="percent-item">
-                    <label>
-                        <span class="dot" style="background:#9c27b0"></span>
-                        Самоцитирования
-                    </label>
+                <div class="percent-item" data-key="selfCitations">
+                    <div class="percent-head">
+                        <span class="dot dot-purple"></span>
+                        <span class="percent-label">Самоцитирования</span>
+                    </div>
                     <div class="slider-row">
                         <input type="range" id="selfCitations" min="0" max="100" step="0.01" value="1.09">
                         <input type="number" id="selfCitationsNum" min="0" max="100" step="0.01" value="1.09">
-                        <span>%</span>
+                        <span class="percent-sign">%</span>
                     </div>
                 </div>
 
-                <div class="percent-item">
-                    <label>
-                        <span class="dot" style="background:#f44336"></span>
-                        ИИ-контент
-                    </label>
+                <div class="percent-item" data-key="aiContent">
+                    <div class="percent-head">
+                        <span class="dot dot-red"></span>
+                        <span class="percent-label">ИИ-контент</span>
+                    </div>
                     <div class="slider-row">
                         <input type="range" id="aiContent" min="0" max="100" step="0.01" value="0">
                         <input type="number" id="aiContentNum" min="0" max="100" step="0.01" value="0">
-                        <span>%</span>
+                        <span class="percent-sign">%</span>
                     </div>
                 </div>
             </div>
 
             <div class="sum-display">
-                Сумма: <span id="totalSum">100.00</span>%
-                <span id="sumStatus" class="status-ok">✓ Корректно</span>
+                <span>Сумма:</span>
+                <span class="sum-value" id="totalSum">100.00</span>
+                <span class="sum-sign">%</span>
+                <span class="sum-status status-ok" id="sumStatus">Корректно</span>
             </div>
 
             <div class="grid-2">
-                <label>Проверено текста (%):
+                <label class="field">
+                    <span class="field-label">Проверено текста (%)</span>
                     <input type="number" id="checkedPercent" value="88.79" step="0.01">
                 </label>
-                <label>Исключено из проверки (%):
+                <label class="field">
+                    <span class="field-label">Исключено из проверки (%)</span>
                     <input type="number" id="excludedPercent" value="11.21" step="0.01">
                 </label>
             </div>
         </section>
 
-        <!-- Блок 3: Источники -->
-        <section class="card">
-            <h2>📚 Источники совпадений</h2>
-            <button id="addSource" class="btn-primary">➕ Добавить источник</button>
-            <table class="sources-table" id="sourcesTable">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Доля в тексте (%)</th>
-                        <th>Источник</th>
-                        <th>Модуль поиска</th>
-                        <th>Действия</th>
-                    </tr>
-                </thead>
-                <tbody id="sourcesBody"></tbody>
-            </table>
+        <!-- Карточка 3: Источники -->
+        <section class="glass-card">
+            <div class="card-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <h2>Источники совпадений</h2>
+                <button id="addSource" class="btn btn-ghost btn-small">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"/>
+                        <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                    Добавить источник
+                </button>
+            </div>
+            <div class="table-wrap">
+                <table class="sources-table" id="sourcesTable">
+                    <thead>
+                        <tr>
+                            <th style="width:50px">№</th>
+                            <th style="width:120px">Доля (%)</th>
+                            <th>Источник</th>
+                            <th style="width:180px">Модуль поиска</th>
+                            <th style="width:60px"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="sourcesBody"></tbody>
+                </table>
+            </div>
         </section>
 
-        <!-- Блок 4: Действия -->
-        <section class="card actions">
-            <button id="generateReport" class="btn-primary btn-large">
-                🔍 Сформировать отчёт
-            </button>
-            <button id="downloadPdf" class="btn-secondary btn-large">
-                📥 Скачать PDF
-            </button>
-            <button id="resetForm" class="btn-tertiary btn-large">
-                🔄 Сбросить
-            </button>
+        <!-- Карточка 4: Действия -->
+        <section class="glass-card actions-card">
+            <div class="actions-row">
+                <button id="generateReport" class="btn btn-primary btn-large">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    Сформировать отчёт
+                </button>
+                <button id="downloadPdf" class="btn btn-secondary btn-large">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Скачать PDF
+                </button>
+                <button id="resetForm" class="btn btn-ghost btn-large">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"/>
+                        <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+                    </svg>
+                    Сбросить
+                </button>
+            </div>
         </section>
 
-        <!-- Блок 5: Превью отчёта -->
-        <section class="card report-preview" id="reportPreview">
-            <h2>👁️ Превью отчёта</h2>
-            <div id="reportContent"></div>
+        <!-- Карточка 5: Превью отчёта -->
+        <section class="glass-card report-preview" id="reportPreview">
+            <div class="card-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <h2>Превью отчёта</h2>
+            </div>
+            <div id="reportContent" class="report-canvas"></div>
         </section>
     </main>
 
-    <footer class="footer">
-        © 2026 Генератор отчётов «Антиплагиат» · Демо-версия
+    <footer class="glass-footer">
+        <div>Антиплагиат · Генератор отчётов · 2026</div>
     </footer>
-
-    <script src="app.js"></script>
 </body>
 </html>
