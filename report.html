@@ -4,484 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Отчёт о проверке №3712 — Антиплагиат ВГУ</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
-            background: #eef2f7;
-            color: #2c3e50;
-            line-height: 1.5;
-            padding: 20px;
-        }
-
-        .toolbar {
-            max-width: 1000px;
-            margin: 0 auto 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-        .toolbar button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-print { background: #1e3c72; color: white; }
-        .btn-print:hover { background: #2a5298; }
-        .btn-back { background: #6c757d; color: white; }
-        .btn-back:hover { background: #5a6268; }
-
-        .report {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px 50px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .report-header {
-            text-align: center;
-            border-bottom: 3px solid #1e3c72;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .report-header .service {
-            font-size: 12px;
-            color: #777;
-            margin-bottom: 8px;
-        }
-
-        .report-header .service a {
-            color: #2a5298;
-            text-decoration: none;
-        }
-
-        .report-header h1 {
-            color: #1e3c72;
-            font-size: 26px;
-            font-weight: 700;
-        }
-
-        .section {
-            margin-bottom: 28px;
-        }
-
-        .section h2 {
-            color: #1e3c72;
-            font-size: 16px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 14px;
-            padding-bottom: 6px;
-            border-bottom: 2px solid #e4ecf5;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 30px;
-        }
-
-        .info-grid .row {
-            display: flex;
-            padding: 6px 0;
-            border-bottom: 1px dashed #e4ecf5;
-        }
-
-        .info-grid .label {
-            font-weight: 600;
-            color: #555;
-            min-width: 200px;
-        }
-
-        .info-grid .value {
-            color: #2c3e50;
-            flex: 1;
-        }
-
-        /* Результаты проверки */
-        .results {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .pie-container {
-            position: relative;
-            width: 260px;
-            height: 260px;
-        }
-
-        .pie-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            background: white;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .pie-center .big {
-            font-size: 26px;
-            font-weight: 700;
-            color: #4caf50;
-        }
-
-        .pie-center .small {
-            font-size: 11px;
-            color: #777;
-            margin-top: 2px;
-        }
-
-        .legend {
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .legend-color {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-
-        .legend-label {
-            flex: 1;
-            font-size: 14px;
-        }
-
-        .legend-value {
-            font-weight: 700;
-            font-size: 15px;
-            color: #1e3c72;
-        }
-
-        .checked-info {
-            background: #f8fafc;
-            padding: 12px 16px;
-            border-left: 4px solid #2a5298;
-            border-radius: 4px;
-            margin-top: 18px;
-            font-size: 13px;
-        }
-
-        .checked-info b { color: #1e3c72; }
-
-        .excluded {
-            margin-top: 8px;
-            color: #666;
-            font-size: 12px;
-            font-style: italic;
-        }
-
-        /* Таблица источников */
-        .sources-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 10px;
-        }
-
-        .sources-table thead {
-            background: #1e3c72;
-            color: white;
-        }
-
-        .sources-table th, .sources-table td {
-            padding: 8px 10px;
-            text-align: left;
-            border: 1px solid #d0d7de;
-        }
-
-        .sources-table th {
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .sources-table tbody tr:nth-child(even) {
-            background: #f8fafc;
-        }
-
-        .sources-table tbody tr:hover {
-            background: #e3f2fd;
-        }
-
-        .sources-table .num {
-            text-align: center;
-            font-weight: 600;
-            color: #1e3c72;
-        }
-
-        .sources-table .percent {
-            text-align: right;
-            font-weight: 700;
-            color: #ff9800;
-        }
-
-        .module-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #e3f2fd;
-            color: #1e3c72;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 500;
-        }
-
-        /* Параметры проверки */
-        .params-list {
-            list-style: none;
-        }
-
-        .params-list li {
-            padding: 6px 0;
-            border-bottom: 1px dashed #e4ecf5;
-            display: flex;
-        }
-
-        .params-list li::before {
-            content: "✓";
-            color: #4caf50;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .modules-list {
-            background: #f8fafc;
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #555;
-            line-height: 1.7;
-            border: 1px solid #e4ecf5;
-        }
-
-        .modules-list span {
-            display: inline-block;
-            background: white;
-            padding: 2px 8px;
-            margin: 2px;
-            border-radius: 10px;
-            border: 1px solid #d0d7de;
-            font-size: 11px;
-        }
-
-        /* Термины */
-        .terms {
-            font-size: 12px;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .terms p {
-            margin-bottom: 10px;
-            padding-left: 14px;
-            border-left: 3px solid #e4ecf5;
-        }
-
-        .terms b {
-            color: #1e3c72;
-        }
-
-        /* Футер */
-        .report-footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #1e3c72;
-            text-align: center;
-            font-size: 11px;
-            color: #777;
-        }
-
-        .disclaimer {
-            background: #fff8e1;
-            border-left: 4px solid #ffc107;
-            padding: 12px 16px;
-            font-size: 12px;
-            color: #555;
-            margin-top: 15px;
-            border-radius: 4px;
-        }
-
-        @media print {
-            body { background: white; padding: 0; }
-            .toolbar { display: none; }
-            .report { box-shadow: none; padding: 20px; max-width: 100%; }
-            .sources-table tbody tr:nth-child(even) { background: white; }
-        }
-
-        @media (max-width: 768px) {
-            .report { padding: 20px; }
-            .info-grid { grid-template-columns: 1fr; }
-            .info-grid .label { min-width: 140px; }
-            .results { flex-direction: column; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="report-body">
 
-<div class="toolbar">
-    <button class="btn-back" onclick="window.location.href='index.html'">← К редактору</button>
-    <button class="btn-print" onclick="window.print()">🖨️ Печать / PDF</button>
+<div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
 </div>
 
-<div class="report">
-    <!-- ШАПКА -->
+<div class="report-toolbar">
+    <button class="btn btn-ghost" onclick="window.location.href='index.html'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+        </svg>
+        К редактору
+    </button>
+    <button class="btn btn-primary" onclick="window.print()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        Печать / PDF
+    </button>
+</div>
+
+<div class="report-paper">
+
     <div class="report-header">
-        <div class="service">Отчёт предоставлен сервисом «Антиплагиат» — <a href="http://vsu-by.antiplagiat.ru" target="_blank">http://vsu-by.antiplagiat.ru</a></div>
+        <div class="report-service">Отчёт предоставлен сервисом «Антиплагиат» — <a href="http://vsu-by.antiplagiat.ru" target="_blank">http://vsu-by.antiplagiat.ru</a></div>
         <h1>Отчёт о проверке</h1>
     </div>
 
-    <!-- ИНФОРМАЦИЯ О ДОКУМЕНТЕ -->
-    <div class="section">
-        <h2>Общая информация</h2>
-        <div class="info-grid">
-            <div class="row"><div class="label">Автор:</div><div class="value">Цырулик Андрей Сергеевич</div></div>
-            <div class="row"><div class="label">Проверяющий:</div><div class="value">Бревнова Анастасия Андреевна</div></div>
-            <div class="row"><div class="label">Название документа:</div><div class="value">РАЗРАБОТКА ВЕБ-САЙТА ТУРАГЕНТСТВО</div></div>
-            <div class="row"><div class="label">Организация:</div><div class="value">Учреждение образования «Витебский государственный университет имени П.М. Машерова»</div></div>
+    <div class="report-section">
+        <h3 class="section-title">Общая информация</h3>
+        <div class="report-grid">
+            <div class="report-row"><span class="report-label">Автор</span><span class="report-value">Цырулик Андрей Сергеевич</span></div>
+            <div class="report-row"><span class="report-label">Проверяющий</span><span class="report-value">Бревнова Анастасия Андреевна</span></div>
+            <div class="report-row report-row-full"><span class="report-label">Название документа</span><span class="report-value">РАЗРАБОТКА ВЕБ-САЙТА ТУРАГЕНТСТВО</span></div>
+            <div class="report-row report-row-full"><span class="report-label">Организация</span><span class="report-value">Учреждение образования «Витебский государственный университет имени П.М. Машерова»</span></div>
         </div>
     </div>
 
-    <!-- ИНФОРМАЦИЯ О ДОКУМЕНТЕ (детали) -->
-    <div class="section">
-        <h2>Информация о документе</h2>
-        <div class="info-grid">
-            <div class="row"><div class="label">Номер документа:</div><div class="value"><b>3712</b></div></div>
-            <div class="row"><div class="label">Тип документа:</div><div class="value"><b>Дипломная работа</b></div></div>
-            <div class="row"><div class="label">Количество страниц:</div><div class="value"><b>38</b></div></div>
-            <div class="row"><div class="label">Символов в тексте:</div><div class="value"><b>60 256</b></div></div>
-            <div class="row"><div class="label">Слов в тексте:</div><div class="value"><b>6 901</b></div></div>
-            <div class="row"><div class="label">Число предложений:</div><div class="value"><b>1 989</b></div></div>
-            <div class="row"><div class="label">Дата проверки:</div><div class="value"><b>09.06.2026 10:34:55</b></div></div>
-            <div class="row"><div class="label">Дата корректировки:</div><div class="value"><b>09.06.2026 10:45:55</b></div></div>
-            <div class="row"><div class="label">Комментарий:</div><div class="value">не указано</div></div>
+    <div class="report-section">
+        <h3 class="section-title">Информация о документе</h3>
+        <div class="report-grid">
+            <div class="report-row"><span class="report-label">Номер документа</span><span class="report-value"><b>3712</b></span></div>
+            <div class="report-row"><span class="report-label">Тип документа</span><span class="report-value"><b>Дипломная работа</b></span></div>
+            <div class="report-row"><span class="report-label">Количество страниц</span><span class="report-value"><b>38</b></span></div>
+            <div class="report-row"><span class="report-label">Символов в тексте</span><span class="report-value"><b>60 256</b></span></div>
+            <div class="report-row"><span class="report-label">Слов в тексте</span><span class="report-value"><b>6 901</b></span></div>
+            <div class="report-row"><span class="report-label">Число предложений</span><span class="report-value"><b>1 989</b></span></div>
+            <div class="report-row"><span class="report-label">Дата проверки</span><span class="report-value"><b>09.06.2026 10:34:55</b></span></div>
+            <div class="report-row"><span class="report-label">Дата корректировки</span><span class="report-value"><b>09.06.2026 10:45:55</b></span></div>
         </div>
     </div>
 
-    <!-- РЕЗУЛЬТАТЫ ПРОВЕРКИ -->
-    <div class="section">
-        <h2>Результаты проверки</h2>
-        <div class="results">
-            <div class="pie-container">
-                <svg viewBox="0 0 260 260" width="260" height="260">
-                    <!-- Оригинальность 89.39% -->
-                    <path d="M 130 130 L 130 20 A 110 110 0 1 1 34.4 183.2 Z" fill="#4caf50" stroke="white" stroke-width="2"/>
-                    <!-- Совпадения 9.52% -->
-                    <path d="M 130 130 L 34.4 183.2 A 110 110 0 0 1 51.8 62.5 Z" fill="#ff9800" stroke="white" stroke-width="2"/>
-                    <!-- Самоцитирования 1.09% -->
-                    <path d="M 130 130 L 51.8 62.5 A 110 110 0 0 1 65.8 48.3 Z" fill="#9c27b0" stroke="white" stroke-width="2"/>
-                    <!-- Центральный круг -->
-                    <circle cx="130" cy="130" r="55" fill="white"/>
+    <div class="report-section">
+        <h3 class="section-title">Результаты проверки</h3>
+        <div class="report-results">
+            <div class="report-pie-wrap">
+                <svg class="report-pie" viewBox="0 0 260 260">
+                    <defs>
+                        <filter id="pieShadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+                            <feOffset dx="0" dy="2"/>
+                            <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer>
+                            <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
+                    </defs>
+                    <g filter="url(#pieShadow)">
+                        <!-- Оригинальность 89.39% -->
+                        <path d="M 130 130 L 130 20 A 110 110 0 1 1 34.4 183.2 Z" fill="#34C759"/>
+                        <!-- Совпадения 9.52% -->
+                        <path d="M 130 130 L 34.4 183.2 A 110 110 0 0 1 51.8 62.5 Z" fill="#FF9500"/>
+                        <!-- Самоцитирования 1.09% -->
+                        <path d="M 130 130 L 51.8 62.5 A 110 110 0 0 1 65.8 48.3 Z" fill="#AF52DE"/>
+                    </g>
+                    <circle cx="130" cy="130" r="60" fill="white"/>
                 </svg>
-                <div class="pie-center">
+                <div class="report-pie-center">
                     <div class="big">89.39%</div>
                     <div class="small">оригинальность</div>
                 </div>
             </div>
 
-            <div class="legend">
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#4caf50"></div>
-                    <div class="legend-label">Оригинальность</div>
-                    <div class="legend-value">89.39%</div>
+            <div class="report-legend">
+                <div class="report-legend-item">
+                    <span class="legend-color" style="background:#34C759"></span>
+                    <span class="legend-label">Оригинальность</span>
+                    <span class="legend-value">89.39%</span>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#ff9800"></div>
-                    <div class="legend-label">Совпадения</div>
-                    <div class="legend-value">9.52%</div>
+                <div class="report-legend-item">
+                    <span class="legend-color" style="background:#FF9500"></span>
+                    <span class="legend-label">Совпадения</span>
+                    <span class="legend-value">9.52%</span>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#2196f3"></div>
-                    <div class="legend-label">Цитирования</div>
-                    <div class="legend-value">0.00%</div>
+                <div class="report-legend-item">
+                    <span class="legend-color" style="background:#007AFF"></span>
+                    <span class="legend-label">Цитирования</span>
+                    <span class="legend-value">0.00%</span>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#9c27b0"></div>
-                    <div class="legend-label">Самоцитирования</div>
-                    <div class="legend-value">1.09%</div>
+                <div class="report-legend-item">
+                    <span class="legend-color" style="background:#AF52DE"></span>
+                    <span class="legend-label">Самоцитирования</span>
+                    <span class="legend-value">1.09%</span>
                 </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background:#f44336"></div>
-                    <div class="legend-label">ИИ-контент</div>
-                    <div class="legend-value">0.00%</div>
+                <div class="report-legend-item">
+                    <span class="legend-color" style="background:#FF3B30"></span>
+                    <span class="legend-label">ИИ-контент</span>
+                    <span class="legend-value">0.00%</span>
                 </div>
             </div>
         </div>
 
-        <div class="checked-info">
-            Проверено: <b>88.79%</b> текста документа, исключено из проверки: <b>11.21%</b> текста документа.
-            <div class="excluded">Разделы и элементы, отключенные пользователем: Приложение, Таблицы</div>
+        <div class="report-checked">
+            <div>Проверено: <b>88.79%</b> текста документа, исключено из проверки: <b>11.21%</b> текста документа.</div>
+            <div class="report-excluded">Разделы и элементы, отключенные пользователем: Приложение, Таблицы</div>
         </div>
     </div>
 
-    <!-- ИСТОЧНИКИ -->
-    <div class="section">
-        <h2>Источники совпадений (с ненулевой долей)</h2>
-        <table class="sources-table">
-            <thead>
-                <tr>
-                    <th style="width:50px">№</th>
-                    <th style="width:100px">Доля в тексте</th>
-                    <th>Источник</th>
-                    <th>Модуль поиска</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td class="num">[01]</td><td class="percent">2.45%</td><td>ВКР_Ишумбаева Велера</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[17]</td><td class="percent">1.09%</td><td>Шаблонные фразы</td><td><span class="module-badge">Шаблонные фразы</span></td></tr>
-                <tr><td class="num">[02]</td><td class="percent">0.89%</td><td>Разработка веб-сервиса для цифровизации бизнеса</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[08]</td><td class="percent">0.75%</td><td>terehina_p_s_razrabotka-veb-igry</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[15]</td><td class="percent">0.70%</td><td>ВКР Широков Н.В 6596(v7)</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[24]</td><td class="percent">0.55%</td><td>Разработка сайта для аренды яхт</td><td><span class="module-badge">Публикации eLIBRARY (переводы)</span></td></tr>
-                <tr><td class="num">[48]</td><td class="percent">0.55%</td><td>Учебник по clean architecture programming</td><td><span class="module-badge">Интернет (переводные)</span></td></tr>
-                <tr><td class="num">[04]</td><td class="percent">0.51%</td><td>Инф.технологии</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[06]</td><td class="percent">0.48%</td><td>Разработка веб-платформы для цифровизации</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[18]</td><td class="percent">0.45%</td><td>Перспектива-2021</td><td><span class="module-badge">Публикации eLIBRARY</span></td></tr>
-                <tr><td class="num">[25]</td><td class="percent">0.43%</td><td>Коммерческое бюджетирование</td><td><span class="module-badge">Сводная коллекция ЭБС</span></td></tr>
-                <tr><td class="num">[07]</td><td class="percent">0.39%</td><td>голованов диплом</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[09]</td><td class="percent">0.34%</td><td>https://rep.vsu.by/bitstream/12345...</td><td><span class="module-badge">Интернет Плюс</span></td></tr>
-                <tr><td class="num">[05]</td><td class="percent">0.33%</td><td>готовый диплом Варгич</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[19]</td><td class="percent">0.27%</td><td>Общие требования к порядку выплаты</td><td><span class="module-badge">eLIBRARY (переводы)</span></td></tr>
-                <tr><td class="num">[13]</td><td class="percent">0.21%</td><td>igonin_a_e_razrabotka-informacion...</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-                <tr><td class="num">[16]</td><td class="percent">0.13%</td><td>Общие требования к порядку оформления</td><td><span class="module-badge">Публикации eLIBRARY</span></td></tr>
-                <tr><td class="num">[14]</td><td class="percent">0.07%</td><td>2025_403_khlopunovva.pdf</td><td><span class="module-badge">Интернет Плюс</span></td></tr>
-                <tr><td class="num">[03]</td><td class="percent">0.04%</td><td>Файл, добавленный в рамках модуля</td><td><span class="module-badge">Кольцо вузов</span></td></tr>
-            </tbody>
-        </table>
+    <div class="report-section">
+        <h3 class="section-title">Источники совпадений</h3>
+        <div class="report-table-wrap">
+            <table class="report-table">
+                <thead>
+                    <tr>
+                        <th style="width:50px">№</th>
+                        <th style="width:110px">Доля в тексте</th>
+                        <th>Источник</th>
+                        <th>Модуль поиска</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td class="num">[01]</td><td class="percent">2.45%</td><td>ВКР_Ишумбаева Велера</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[17]</td><td class="percent">1.09%</td><td>Шаблонные фразы</td><td>Шаблонные фразы</td></tr>
+                    <tr><td class="num">[02]</td><td class="percent">0.89%</td><td>Разработка веб-сервиса для цифровизации бизнеса</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[08]</td><td class="percent">0.75%</td><td>terehina_p_s_razrabotka-veb-igry</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[15]</td><td class="percent">0.70%</td><td>ВКР Широков Н.В 6596(v7)</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[24]</td><td class="percent">0.55%</td><td>Разработка сайта для аренды яхт</td><td>Публикации eLIBRARY (переводы)</td></tr>
+                    <tr><td class="num">[48]</td><td class="percent">0.55%</td><td>Учебник по clean architecture programming</td><td>Интернет (переводные)</td></tr>
+                    <tr><td class="num">[04]</td><td class="percent">0.51%</td><td>Инф.технологии</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[06]</td><td class="percent">0.48%</td><td>Разработка веб-платформы для цифровизации</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[18]</td><td class="percent">0.45%</td><td>Перспектива-2021</td><td>Публикации eLIBRARY</td></tr>
+                    <tr><td class="num">[25]</td><td class="percent">0.43%</td><td>Коммерческое бюджетирование</td><td>Сводная коллекция ЭБС</td></tr>
+                    <tr><td class="num">[07]</td><td class="percent">0.39%</td><td>голованов диплом</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[09]</td><td class="percent">0.34%</td><td>https://rep.vsu.by/bitstream/12345...</td><td>Интернет Плюс</td></tr>
+                    <tr><td class="num">[05]</td><td class="percent">0.33%</td><td>готовый диплом Варгич</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[19]</td><td class="percent">0.27%</td><td>Общие требования к порядку выплаты</td><td>eLIBRARY (переводы)</td></tr>
+                    <tr><td class="num">[13]</td><td class="percent">0.21%</td><td>igonin_a_e_razrabotka-informacion...</td><td>Кольцо вузов</td></tr>
+                    <tr><td class="num">[16]</td><td class="percent">0.13%</td><td>Общие требования к порядку оформления</td><td>Публикации eLIBRARY</td></tr>
+                    <tr><td class="num">[14]</td><td class="percent">0.07%</td><td>2025_403_khlopunovva.pdf</td><td>Интернет Плюс</td></tr>
+                    <tr><td class="num">[03]</td><td class="percent">0.04%</td><td>Файл, добавленный в рамках модуля</td><td>Кольцо вузов</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- ПАРАМЕТРЫ ПРОВЕРКИ -->
-    <div class="section">
-        <h2>Параметры проверки</h2>
-        <ul class="params-list">
+    <div class="report-section">
+        <h3 class="section-title">Параметры проверки</h3>
+        <ul class="report-params">
             <li>Выполнена проверка с учетом редактирования: <b>Да</b></li>
             <li>Выполнено распознавание текста (OCR): <b>Нет</b></li>
             <li>Выполнена проверка с учетом структуры: <b>Да</b></li>
@@ -489,64 +174,30 @@
         </ul>
     </div>
 
-    <!-- МОДУЛИ ПОИСКА -->
-    <div class="section">
-        <h2>Модули поиска</h2>
-        <div class="modules-list">
-            <span>Профессиональная лексика. АПК и биотех</span>
-            <span>Цитирование</span>
-            <span>Переводные заимствования</span>
-            <span>Шаблонные фразы</span>
-            <span>Профессиональная лексика. Медицина</span>
-            <span>Профессиональная лексика. Юриспруденция</span>
-            <span>Сводная коллекция ЭБС</span>
-            <span>Публикации eLIBRARY</span>
-            <span>IEEE</span>
-            <span>Публикации РГБ</span>
-            <span>Кольцо вузов</span>
-            <span>Коллекция НБУ</span>
-            <span>Сводная коллекция научных работ Беларуси</span>
-            <span>ИПС Адилет</span>
-            <span>СПС ГАРАНТ: аналитика</span>
-            <span>СПС ГАРАНТ: нормативно-правовая документация</span>
-            <span>Интернет Плюс</span>
-            <span>Патенты СССР, РФ, СНГ</span>
-            <span>Медицина</span>
-            <span>PubMed</span>
-            <span>Коллекция открытых публикаций международных издательств</span>
-            <span>СМИ России и СНГ</span>
-        </div>
-    </div>
-
-    <!-- ТЕРМИНЫ -->
-    <div class="section">
-        <h2>Пояснения к показателям</h2>
-        <div class="terms">
+    <div class="report-section">
+        <h3 class="section-title">Пояснения к показателям</h3>
+        <div class="report-terms">
             <p><b>Совпадения</b> — фрагменты проверяемого текста, полностью или частично сходные с найденными источниками, за исключением фрагментов, которые система отнесла к цитированию или самоцитированию.</p>
             <p><b>Самоцитирования</b> — фрагменты проверяемого текста, совпадающие или почти совпадающие с фрагментом текста источника, автором или соавтором которого является автор проверяемого документа.</p>
-            <p><b>Цитирования</b> — фрагменты проверяемого текста, которые не являются авторскими, но которые система отнесла к корректно оформленным. К цитированиям относятся также шаблонные фразы, библиография, фрагменты текста, найденные модулем поиска «СПС Гарант».</p>
+            <p><b>Цитирования</b> — фрагменты проверяемого текста, которые не являются авторскими, но которые система отнесла к корректно оформленным.</p>
             <p><b>Оригинальный текст</b> — фрагменты проверяемого текста, не обнаруженные ни в одном источнике и не отмеченные ни одним из модулей поиска.</p>
         </div>
-
-        <div class="disclaimer">
-            ⚠️ Обращаем Ваше внимание, что система находит текстовые совпадения проверяемого документа с проиндексированными в системе источниками. При этом система является вспомогательным инструментом — определение корректности и правомерности совпадений или цитирований, а также авторства текстовых фрагментов проверяемого документа остаётся в компетенции проверяющего.
+        <div class="report-disclaimer">
+            Обращаем Ваше внимание, что система находит текстовые совпадения проверяемого документа с проиндексированными в системе источниками. При этом система является вспомогательным инструментом — определение корректности и правомерности совпадений или цитирований, а также авторства текстовых фрагментов проверяемого документа остаётся в компетенции проверяющего.
         </div>
     </div>
 
-    <!-- ФУТЕР -->
     <div class="report-footer">
-        Дата формирования отчёта: <b id="currentDate"></b><br>
-        Сервис «Антиплагиат» · <a href="http://vsu-by.antiplagiat.ru" target="_blank">http://vsu-by.antiplagiat.ru</a><br>
-        Номер документа: 3712 · Уникальный код проверки: 76DD4FE4DAC2DDE6C237DA32634D9F5CBEE80AE6
+        <div>Дата формирования отчёта: <b id="currentDate"></b></div>
+        <div>Сервис «Антиплагиат» · http://vsu-by.antiplagiat.ru</div>
+        <div>Номер документа: 3712 · Уникальный код: 76DD4FE4DAC2DDE6C237DA32634D9F5CBEE80AE6</div>
     </div>
 </div>
 
 <script>
-    // Установка текущей даты
     const now = new Date();
-    const dateStr = now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU');
-    document.getElementById('currentDate').textContent = dateStr;
+    document.getElementById('currentDate').textContent = 
+        now.toLocaleDateString('ru-RU') + ' ' + now.toLocaleTimeString('ru-RU');
 </script>
-
 </body>
 </html>
