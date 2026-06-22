@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор отчётов «Антиплагиат»</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">🛡️ Антиплагиат — Генератор отчётов</div>
+        <div class="subtitle">http://vsu-by.antiplagiat.ru</div>
+    </header>
 
+    <main class="container">
+        <!-- Блок 1: Метаданные документа -->
+        <section class="card">
+            <h2>📄 Информация о документе</h2>
+            <div class="grid-2">
+                <label>Автор:
+                    <input type="text" id="author" value="Цырулик Андрей Сергеевич">
+                </label>
+                <label>Проверяющий:
+                    <input type="text" id="reviewer" value="Бревнова Анастасия Андреевна">
+                </label>
+                <label>Название документа:
+                    <input type="text" id="docTitle" value="РАЗРАБОТКА ВЕБ-САЙТА ТУРАГЕНТСТВО">
+                </label>
+                <label>Организация:
+                    <input type="text" id="organization" value="Учреждение образования «Витебский государственный университет имени П.М. Машерова»">
+                </label>
+                <label>Номер документа:
+                    <input type="number" id="docNumber" value="3712">
+                </label>
+                <label>Тип документа:
+                    <select id="docType">
+                        <option>Дипломная работа</option>
+                        <option>Курсовая работа</option>
+                        <option>Реферат</option>
+                        <option>Статья</option>
+                        <option>Диссертация</option>
+                    </select>
+                </label>
+                <label>Количество страниц:
+                    <input type="number" id="pages" value="38">
+                </label>
+                <label>Слов в тексте:
+                    <input type="number" id="words" value="6901">
+                </label>
+                <label>Символов в тексте:
+                    <input type="number" id="chars" value="60256">
+                </label>
+                <label>Число предложений:
+                    <input type="number" id="sentences" value="1989">
+                </label>
+            </div>
+        </section>
+
+        <!-- Блок 2: Настройка процентов -->
+        <section class="card">
+            <h2>📊 Настройка показателей проверки</h2>
+            <p class="hint">Сумма показателей должна быть равна 100%. Значения пересчитываются автоматически.</p>
+            
+            <div class="percentages">
+                <div class="percent-item">
+                    <label>
+                        <span class="dot" style="background:#4caf50"></span>
+                        Оригинальность
+                    </label>
+                    <div class="slider-row">
+                        <input type="range" id="originality" min="0" max="100" step="0.01" value="89.39">
+                        <input type="number" id="originalityNum" min="0" max="100" step="0.01" value="89.39">
+                        <span>%</span>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <label>
+                        <span class="dot" style="background:#ff9800"></span>
+                        Совпадения
+                    </label>
+                    <div class="slider-row">
+                        <input type="range" id="matches" min="0" max="100" step="0.01" value="9.52">
+                        <input type="number" id="matchesNum" min="0" max="100" step="0.01" value="9.52">
+                        <span>%</span>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <label>
+                        <span class="dot" style="background:#2196f3"></span>
+                        Цитирования
+                    </label>
+                    <div class="slider-row">
+                        <input type="range" id="citations" min="0" max="100" step="0.01" value="0">
+                        <input type="number" id="citationsNum" min="0" max="100" step="0.01" value="0">
+                        <span>%</span>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <label>
+                        <span class="dot" style="background:#9c27b0"></span>
+                        Самоцитирования
+                    </label>
+                    <div class="slider-row">
+                        <input type="range" id="selfCitations" min="0" max="100" step="0.01" value="1.09">
+                        <input type="number" id="selfCitationsNum" min="0" max="100" step="0.01" value="1.09">
+                        <span>%</span>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <label>
+                        <span class="dot" style="background:#f44336"></span>
+                        ИИ-контент
+                    </label>
+                    <div class="slider-row">
+                        <input type="range" id="aiContent" min="0" max="100" step="0.01" value="0">
+                        <input type="number" id="aiContentNum" min="0" max="100" step="0.01" value="0">
+                        <span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sum-display">
+                Сумма: <span id="totalSum">100.00</span>%
+                <span id="sumStatus" class="status-ok">✓ Корректно</span>
+            </div>
+
+            <div class="grid-2">
+                <label>Проверено текста (%):
+                    <input type="number" id="checkedPercent" value="88.79" step="0.01">
+                </label>
+                <label>Исключено из проверки (%):
+                    <input type="number" id="excludedPercent" value="11.21" step="0.01">
+                </label>
+            </div>
+        </section>
+
+        <!-- Блок 3: Источники -->
+        <section class="card">
+            <h2>📚 Источники совпадений</h2>
+            <button id="addSource" class="btn-primary">➕ Добавить источник</button>
+            <table class="sources-table" id="sourcesTable">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Доля в тексте (%)</th>
+                        <th>Источник</th>
+                        <th>Модуль поиска</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="sourcesBody"></tbody>
+            </table>
+        </section>
+
+        <!-- Блок 4: Действия -->
+        <section class="card actions">
+            <button id="generateReport" class="btn-primary btn-large">
+                🔍 Сформировать отчёт
+            </button>
+            <button id="downloadPdf" class="btn-secondary btn-large">
+                📥 Скачать PDF
+            </button>
+            <button id="resetForm" class="btn-tertiary btn-large">
+                🔄 Сбросить
+            </button>
+        </section>
+
+        <!-- Блок 5: Превью отчёта -->
+        <section class="card report-preview" id="reportPreview">
+            <h2>👁️ Превью отчёта</h2>
+            <div id="reportContent"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        © 2026 Генератор отчётов «Антиплагиат» · Демо-версия
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
